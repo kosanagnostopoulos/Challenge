@@ -42,5 +42,11 @@ namespace ChallengeTests
             }
             Assert.AreEqual(2 * _names.Count, _loader.Count());
         }
+
+        [TestMethod]
+        public void ShouldNotAcceptStringsThatDontStartWithUpperCaseLetter()
+        {
+            Assert.Fail();
+        }
     }
 }
