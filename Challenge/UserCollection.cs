@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Challenge
 {
-    public class UserCollection
+    public class UserCollection : IUserCollection
     {
         private readonly ICollection<string> _collection;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Challenge
 {
-    internal interface ILineReader
+    public interface ILineReader
     {
         IEnumerable<string> Read(string file);
     }
