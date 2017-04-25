@@ -49,6 +49,7 @@
     <Compile Include="LineReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShortestPath.cs" />
     <Compile Include="UserCollection.cs" />
   </ItemGroup>
   <ItemGroup>

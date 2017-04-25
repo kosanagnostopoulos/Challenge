@@ -60,5 +60,10 @@ namespace Challenge
             }
             return num;
         }
+
+        public bool DoesExist(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
