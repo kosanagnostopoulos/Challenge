@@ -65,5 +65,15 @@ namespace Challenge
         {
             throw new NotImplementedException();
         }
+
+        public void Load(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
