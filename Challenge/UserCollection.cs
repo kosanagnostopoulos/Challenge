@@ -35,6 +35,11 @@ namespace Challenge
 
         private void LoadSingleName(string name)
         {
+            if (name[0] < 'A' || name[0] > 'Z')
+            {
+                throw new ArgumentOutOfRangeException(nameof(name));
+            }
+
             if (!_index[FindArrayBasedOnFirstLetter(name)].Contains(name))
             {
                 _index[FindArrayBasedOnFirstLetter(name)].Add(name);

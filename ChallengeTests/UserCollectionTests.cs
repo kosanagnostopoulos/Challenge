@@ -44,9 +44,17 @@ namespace ChallengeTests
         }
 
         [TestMethod]
-        public void ShouldNotAcceptStringsThatDontStartWithUpperCaseLetter()
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ShouldNotAcceptStringsThatDontStartWithAsciiCharacterLessThanCapitalA()
         {
-            Assert.Fail();
+            _loader.Load(new Tuple<string, string>("@" , "@"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ShouldNotAcceptStringsThatDontStartWithAsciiCharacterMoreThanCapitalZ()
+        {
+            _loader.Load(new Tuple<string, string>("[", "["));
         }
     }
 }
