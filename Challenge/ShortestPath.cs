@@ -13,15 +13,23 @@ namespace Challenge
         private IUserCollection _graph;
         private bool _destNodeFound = false;
         private int _distance = 0;
-        private IUserCollection _neighbourLayer;
-        private IUserCollection _visitedNodes;
+        private readonly IUserCollection _neighbourLayer;
+        private readonly IUserCollection _visitedNodes;
+        private string _destinationNode;
+
+        public ShortestPath(IUserCollection neighbourLayer, IUserCollection visitedNodes)
+        {
+            _neighbourLayer = neighbourLayer;
+            _visitedNodes = visitedNodes;
+        }
+
 
         public int FindDistance(IUserCollection graph, string rootNode, string destinationNode)
         {
             VerifyInputAreValid(graph, rootNode, destinationNode);
-            InitialiseCollections();
 
-            Initialise(rootNode);
+            InitialiseCollections();
+            Initialise(graph , rootNode , destinationNode);
             do
             {
                 ++_distance;
@@ -33,8 +41,11 @@ namespace Challenge
             return _destNodeFound ? _distance : NOT_FOUND;
         }
 
-        private void Initialise(string rootNode)
+        public void Initialise(IUserCollection graph , string rootNode , string destinationNode)
         {
+            _graph = graph;
+            _destinationNode = destinationNode;
+            VerifyNodesExist(rootNode, destinationNode);
             _distance = 0;
             _destNodeFound = false;
             _neighbourLayer.Load(rootNode);
@@ -49,7 +60,7 @@ namespace Challenge
 
         public bool IsDestNodeInNeighbourLayer()
         {
-            throw new NotImplementedException();
+            return _neighbourLayer.DoesExist(_destinationNode);
         }
 
         public void RemoveNeighbourNodesThatExistInVisitedNodes()
@@ -66,9 +77,6 @@ namespace Challenge
         {
             VerifyInputHaveContent(graph, rootNode, destinationNode);
             VeifyRootAndDestinationAreDifferent(rootNode, destinationNode);
-
-            _graph = graph;
-            VerifyNodesExist(rootNode, destinationNode);
         }
 
         private void VerifyNodesExist(string rootNode, string destinationNode)

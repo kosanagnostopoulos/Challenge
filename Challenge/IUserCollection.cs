@@ -9,5 +9,6 @@ namespace Challenge
         int Count();
         bool DoesExist(string name);
         void Clear();
+        void Remove(string name);
     }
 }
