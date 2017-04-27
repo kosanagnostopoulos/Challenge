@@ -73,7 +73,11 @@ namespace Challenge
 
         public void LoadNewNeighbourLayer()
         {
-            throw new NotImplementedException();
+            var newNeighbourLayer = new UserCollection(new List<string>());
+            foreach (var neighbour in _neighbourLayer)
+            {
+                newNeighbourLayer.AddRange(_neighbourLayer.GetFriendList(neighbour));
+            }
         }
 
         private void VerifyInputAreValid(IUserCollection graph, string rootNode, string destinationNode)

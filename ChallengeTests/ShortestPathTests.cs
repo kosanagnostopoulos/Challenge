@@ -10,27 +10,34 @@ namespace ChallengeTests
     public class ShortestPathTests
     {
         private readonly IUserCollection DONT_CARE = null;
-        const string ROOT_NAME = "root";
-        const string DESTINATION_NAME = "dest";
-        const string ROOT_DOESNOT_EXIST = "RootDoesNotExist";
-        const string DESTINATION_DOESNOT_EXIST = "RootDoesNotExist";
+        const string ROOT_NAME = "ROOT";
+        const string DESTINATION_NAME = "DEST";
+        const string ROOT_DOESNOT_EXIST = "ROOTDOESNOTEXIST";
+        const string DESTINATION_DOESNOT_EXIST = "DESTINATION_DOESNOT_EXIST";
 
         private List<string> VISITED_NODES = new List<string>
         {
-            "visited1",
-            "neighbour1",
-            "visited2",
-            "neighbour2",
-            "neighbour5"
+            "VISITED1",
+            "NEIGHBOUR1",
+            "VISITED2",
+            "NEIGHBOUR2",
+            "NEIGHBOUR5"
         };
 
         private List<string> NEIGHBOUR_NODES = new List<string>
         {
-            "neighbour1",
-            "neighbour2",
-            "neighbour3",
-            "neighbour4",
-            "neighbour5"
+            "NEIGHBOUR1",
+            "NEIGHBOUR2"
+        };
+
+        private List<string> FRIENDS_OF_NEIGHBOUR1 = new List<string>
+        {
+            "NEIGHBOUR2" , "NEIGHBOUR3" , "NEIGHBOUR4"
+        };
+
+        private List<string> FRIENDS_OF_NEIGHBOUR2 = new List<string>
+        {
+            "NEIGHBOUR1" , "NEIGHBOUR4" , "NEIGHBOUR5" , "NEIGHBOUR6"
         };
 
         private readonly Mock<IUserCollection> _collection = new Mock<IUserCollection>();
@@ -139,6 +146,7 @@ namespace ChallengeTests
         {
             SetupRootAndDestinationInMockCollection();
             _visited.Setup(f => f.GetEnumerator()).Returns(VISITED_NODES.GetEnumerator());
+
             _algorithm.RemoveNeighbourNodesThatExistInVisitedNodes();
 
             foreach (var visitedNode in VISITED_NODES)
@@ -146,6 +154,19 @@ namespace ChallengeTests
             _neighbours.Verify(f => f.Remove(It.Is<string>(s => s == visitedNode)) , Times.Exactly(1));
             }
             _neighbours.Verify(f => f.Remove(It.IsAny<string>()), Times.Exactly(VISITED_NODES.Count));
+        }
+
+        [TestMethod]
+        public void WillLoadAllFriendsForAllMembersOfNeighbourLayer()
+        {
+            SetupRootAndDestinationInMockCollection();
+            _neighbours.Setup(f => f.GetEnumerator()).Returns(NEIGHBOUR_NODES.GetEnumerator());
+            _neighbours.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[0])))
+                .Returns(FRIENDS_OF_NEIGHBOUR1);
+            _neighbours.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[1])))
+                .Returns(FRIENDS_OF_NEIGHBOUR2);
+
+            _algorithm.LoadNewNeighbourLayer();
         }
     }
 }

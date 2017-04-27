@@ -12,5 +12,7 @@ namespace Challenge
         bool DoesExist(string name);
         void Clear();
         bool Remove(string name);
+        List<string> GetFriendList(string name);
+        void AddRange(IEnumerable<string> friendsList);
     }
 }

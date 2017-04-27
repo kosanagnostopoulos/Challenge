@@ -91,5 +91,23 @@ namespace Challenge
         {
             return GetEnumerator();
         }
+
+        public List<string> GetFriendList(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void AddRange(IEnumerable<string> friendsList)
+        {
+            if (friendsList == null)
+            {
+                throw new ArgumentNullException(nameof(friendsList));
+            }
+            foreach (var friend in friendsList)
+            {
+                LoadSingleName(friend);
+            }
+        }
     }
 }
