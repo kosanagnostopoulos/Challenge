@@ -138,12 +138,14 @@ namespace ChallengeTests
         public void NodesInNeghbourLayerThatExistInVisitedLayterWillBeRemoved()
         {
             SetupRootAndDestinationInMockCollection();
+            _visited.Setup(f => f.GetEnumerator()).Returns(VISITED_NODES.GetEnumerator());
             _algorithm.RemoveNeighbourNodesThatExistInVisitedNodes();
 
-            _neighbours.Verify(f => f.Remove(It.Is<string>(s => s == VISITED_NODES[1])));
-            _neighbours.Verify(f => f.Remove(It.Is<string>(s => s == VISITED_NODES[3])));
-            _neighbours.Verify(f => f.Remove(It.Is<string>(s => s == VISITED_NODES[4])));
-            _neighbours.Verify(f => f.Remove(It.IsAny<string>()) , Times.Exactly(3));
+            foreach (var visitedNode in VISITED_NODES)
+            {
+            _neighbours.Verify(f => f.Remove(It.Is<string>(s => s == visitedNode)) , Times.Exactly(1));
+            }
+            _neighbours.Verify(f => f.Remove(It.IsAny<string>()), Times.Exactly(VISITED_NODES.Count));
         }
     }
 }

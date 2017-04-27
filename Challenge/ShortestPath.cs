@@ -65,7 +65,10 @@ namespace Challenge
 
         public void RemoveNeighbourNodesThatExistInVisitedNodes()
         {
-            throw new NotImplementedException();
+            foreach (var visitedNode in _visitedNodes)
+            {
+                _neighbourLayer.Remove(visitedNode);
+            }
         }
 
         public void LoadNewNeighbourLayer()

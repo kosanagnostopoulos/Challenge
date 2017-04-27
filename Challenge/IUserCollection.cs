@@ -1,14 +1,16 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Challenge
 {
-    public interface IUserCollection
+    public interface IUserCollection : IEnumerable<string>
     {
         void Load(Tuple<string, string> nameTuple);
         void Load(string name);
         int Count();
         bool DoesExist(string name);
         void Clear();
-        void Remove(string name);
+        bool Remove(string name);
     }
 }
