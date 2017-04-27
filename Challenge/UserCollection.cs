@@ -22,20 +22,23 @@ namespace Challenge
 
         private void InitializeCollection()
         {
-            for (int i = 0; i < _index.Length; ++i)
-            {
-                _index[i] = new List<string>();
-            }
+            Clear();
         }
 
         public void Load(Tuple<string, string> nameTuple)
         {
+            if (nameTuple == null)
+            {
+                throw new ArgumentNullException(nameof(nameTuple));
+            }
+
             LoadSingleName(nameTuple.Item1);
             LoadSingleName(nameTuple.Item2);
         }
 
         private void LoadSingleName(string name)
         {
+
             if (name[0] < 'A' || name[0] > 'Z')
             {
                 throw new ArgumentOutOfRangeException(nameof(name));
@@ -64,17 +67,29 @@ namespace Challenge
 
         public bool DoesExist(string name)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException(nameof(name));
+            }
+
+            return _index[FindArrayBasedOnFirstLetter(name)].Contains(name);
         }
 
         public void Load(string name)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException(nameof(name));
+            }
+            LoadSingleName(name);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _index.Length; ++i)
+            {
+                _index[i] = new List<string>();
+            }
         }
 
         public bool Remove(string name)

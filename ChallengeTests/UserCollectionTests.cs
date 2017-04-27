@@ -9,6 +9,7 @@ namespace ChallengeTests
     public class UserCollectionTests
     {
         private const string NAME = "MPLA_MPLA";
+        private const string ELEMENT_DOESNOT_EXIST = "DOES NOT EXIST";
         private readonly List<Tuple<string, string>> NAMES = new List<Tuple<string, string>>
         {
             new Tuple<string, string>("Name1" , "Name2"),
@@ -33,6 +34,13 @@ namespace ChallengeTests
         public void Initialize()
         {
             _loader = new UserCollection(new List<string>());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LoadShouldNotAllowNullAsInput()
+        {
+            _loader.Load(((Tuple<string, string>)null));
         }
 
         [TestMethod]
@@ -88,6 +96,64 @@ namespace ChallengeTests
             _loader.AddRange(NAME_LIST_WITH_ALREADY_EXISTING_ELEMENTS);
 
             Assert.AreEqual(FINAL_NUMBER_OF_UNIQUE_ELEMENTS, _loader.Count());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DoesExistWillNotAllowNullValueAsInput()
+        {
+            _loader.DoesExist(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DoesExistWillNotAllowEmptyValueAsInput()
+        {
+            _loader.DoesExist("   ");
+        }
+
+        [TestMethod]
+        public void VerifyThatElementInCollectionExists()
+        {
+            _loader.Load(NAMES[0]);
+            Assert.IsTrue(_loader.DoesExist(NAMES[0].Item1));
+        }
+
+        [TestMethod]
+        public void VerifyThatElementInCollectionDoesNotExists()
+        {
+            _loader.Load(NAMES[0]);
+            Assert.IsFalse(_loader.DoesExist(ELEMENT_DOESNOT_EXIST));
+        }
+
+        [TestMethod]
+        public void CleanShouldRemoveAllElementsFromCollection()
+        {
+            _loader.AddRange(NAME_LIST);
+            _loader.Clear();
+
+            Assert.AreEqual(0 , _loader.Count());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void LoadShouldNotAllowNullValues()
+        {
+            _loader.Load((string)null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void LoadShouldNotAllowWhitespaceValuesAsInput()
+        {
+            _loader.Load("  ");
+        }
+
+        [TestMethod]
+        public void ShouldLoadInTheCollectionANewName()
+        {
+            _loader.Load(NAME);
+            Assert.AreEqual(1 , _loader.Count());
         }
     }
 }
