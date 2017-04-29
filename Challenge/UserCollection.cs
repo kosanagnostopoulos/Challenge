@@ -94,7 +94,7 @@ namespace Challenge
 
         public bool Remove(string name)
         {
-            throw new NotImplementedException();
+            return _index[FindArrayBasedOnFirstLetter(name)].Remove(name);
         }
 
         public IEnumerator<string> GetEnumerator()

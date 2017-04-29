@@ -155,5 +155,26 @@ namespace ChallengeTests
             _loader.Load(NAME);
             Assert.AreEqual(1 , _loader.Count());
         }
+
+        [TestMethod]
+        public void WillReturnFalseIfTheNodeYouWantToRemoveDoesNotExist()
+        {
+            Assert.IsFalse(_loader.Remove(ELEMENT_DOESNOT_EXIST));
+        }
+
+        [TestMethod]
+        public void WillReturnTrueIfTheNodeYouWantToRemoveExists()
+        {
+            _loader.Load(NAME);
+            Assert.IsTrue(_loader.Remove(NAME));
+        }
+
+        [TestMethod]
+        public void WillRemoveANodeFromCollection()
+        {
+            _loader.Load(NAME);
+            _loader.Remove(NAME);
+            Assert.AreEqual(0 , _loader.Count());
+        }
     }
 }
