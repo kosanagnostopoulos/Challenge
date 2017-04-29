@@ -58,6 +58,7 @@
     <Compile Include="LineParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShortestPathTests.cs" />
+    <Compile Include="UserCollectionEnumeratorTests.cs" />
     <Compile Include="UserCollectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
