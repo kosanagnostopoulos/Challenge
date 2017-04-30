@@ -13,7 +13,7 @@ namespace Challenge
         private const int LETTERS_OF_ALPHABET = 26;
         private const int ASCII_OF_LETTER_A = 65;
 
-        private List<string>[] _index = new List<string>[LETTERS_OF_ALPHABET];
+        private List<User>[] _index = new List<User>[LETTERS_OF_ALPHABET];
 
         public UserCollection(ICollection<string> collection)
         {
@@ -44,9 +44,9 @@ namespace Challenge
                 throw new ArgumentOutOfRangeException(nameof(name));
             }
 
-            if (!_index[FindArrayBasedOnFirstLetter(name)].Contains(name))
+            if (!DoesExist(name))
             {
-                _index[FindArrayBasedOnFirstLetter(name)].Add(name);
+                _index[FindArrayBasedOnFirstLetter(name)].Add(new User(name));
             }
         }
 
@@ -71,8 +71,8 @@ namespace Challenge
             {
                 throw new ArgumentException(nameof(name));
             }
-
-            return _index[FindArrayBasedOnFirstLetter(name)].Contains(name);
+            var a = _index[FindArrayBasedOnFirstLetter(name)].Find(s => s.Name == name);
+            return _index[FindArrayBasedOnFirstLetter(name)].Find(s => s.Name == name) != null;
         }
 
         public void Load(string name)
@@ -88,30 +88,38 @@ namespace Challenge
         {
             for (int i = 0; i < _index.Length; ++i)
             {
-                _index[i] = new List<string>();
+                _index[i] = new List<User>();
             }
         }
 
         public bool Remove(string name)
         {
-            return _index[FindArrayBasedOnFirstLetter(name)].Remove(name);
+            return _index[FindArrayBasedOnFirstLetter(name)].RemoveAll(s => s.Name == name) != 0;
         }
-
-        public IEnumerator<string> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return (IEnumerator)GetEnumerator();
         }
 
-        public List<string> GetFriendList(string name)
+        public UserCollectionEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new UserCollectionEnumerator(_index);
         }
 
+        public User Find(string name)
+        {
+            var user = _index[FindArrayBasedOnFirstLetter(name)].Find(s => s.Name == name);
+            if (user == null)
+            {
+                throw new KeyNotFoundException(nameof(name));
+            }
+            return user;
+        }
+
+        public IEnumerable<string> GetFriendList(string name)
+        {
+            return Find(name).Friends;
+        }
 
         public void AddRange(IEnumerable<string> friendsList)
         {

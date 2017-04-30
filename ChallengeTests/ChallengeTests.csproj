@@ -60,6 +60,7 @@
     <Compile Include="ShortestPathTests.cs" />
     <Compile Include="UserCollectionEnumeratorTests.cs" />
     <Compile Include="UserCollectionTests.cs" />
+    <Compile Include="UserTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

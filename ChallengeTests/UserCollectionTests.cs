@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Challenge;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -28,6 +29,7 @@ namespace ChallengeTests
         };
 
         private const int FINAL_NUMBER_OF_UNIQUE_ELEMENTS = 6;
+        private List<string> friendList = new List<string>{"FRIEND1" , "FRIEND2" , "FRIEND3"};
         private UserCollection _loader;
 
         [TestInitialize]
@@ -175,6 +177,35 @@ namespace ChallengeTests
             _loader.Load(NAME);
             _loader.Remove(NAME);
             Assert.AreEqual(0 , _loader.Count());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(KeyNotFoundException))]
+        public void FindWillThrowIfUserDoesNotExistInTheCollection()
+        {
+            _loader.Find(ELEMENT_DOESNOT_EXIST);
+        }
+
+        [TestMethod]
+        public void FindWillReturnUserOfCollection()
+        {
+            _loader.Load(NAME);
+            var user = _loader.Find(NAME);
+            Assert.AreEqual(NAME , user.Name);
+            Assert.AreEqual(0 , user.Friends.Count);
+        }
+
+        [TestMethod]
+        public void FriendListWillReturnAListWithName()
+        {
+            _loader.Load(NAME);
+            var user = _loader.Find(NAME);
+            foreach (var friendName in friendList)
+            {
+                user.AddFriend(friendName);
+            }
+
+            Assert.IsTrue(friendList.SequenceEqual(_loader.GetFriendList(NAME)));
         }
     }
 }

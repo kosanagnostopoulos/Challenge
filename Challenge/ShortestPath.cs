@@ -67,7 +67,7 @@ namespace Challenge
         {
             foreach (var visitedNode in _visitedNodes)
             {
-                _neighbourLayer.Remove(visitedNode);
+                _neighbourLayer.Remove((string)visitedNode);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Challenge
             var newNeighbourLayer = new UserCollection(new List<string>());
             foreach (var neighbour in _neighbourLayer)
             {
-                newNeighbourLayer.AddRange(_neighbourLayer.GetFriendList(neighbour));
+                newNeighbourLayer.AddRange(_neighbourLayer.GetFriendList((string)neighbour));
             }
         }
 

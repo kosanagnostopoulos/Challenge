@@ -13,12 +13,12 @@ namespace Challenge
         protected const int ELEMENT_FIRST_POSITION = 0;
         protected const int ARRAY_RESET_POSITION = 0;
 
-        protected readonly List<string>[] _index;
+        protected readonly List<User>[] _index;
 
         protected int _arrayPointer = ARRAY_RESET_POSITION;
         protected int _elementPointer = ELEMENT_RESET_POSITION;
 
-        public UserCollectionEnumerator(List<string>[] index)
+        public UserCollectionEnumerator(List<User>[] index)
         {
             _index = index;
         }

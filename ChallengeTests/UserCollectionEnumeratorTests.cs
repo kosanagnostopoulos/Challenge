@@ -15,10 +15,10 @@ namespace ChallengeTests
         private const int SECOND_ARRAY = 1;
 
         public UserCollectionEnumeratorTests() : base(
-            new List<string>[]
+            new List<User>[]
             {
-                new List<string>{"ELEM1" , "ELEM2"} ,
-                new List<string>{"ELEM3"},
+                new List<User>{new User("ELEM1") , new User("ELEM2")} ,
+                new List<User>{new User("ELEM3")},
             }) { }
 
         [TestMethod]
