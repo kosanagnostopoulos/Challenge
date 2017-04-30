@@ -31,9 +31,36 @@ namespace Challenge
             {
                 throw new ArgumentNullException(nameof(nameTuple));
             }
+            LoadFriendPair(nameTuple.Item1, nameTuple.Item2);
+            LoadFriendPair(nameTuple.Item2, nameTuple.Item1);
+            //LoadSingleName(nameTuple.Item1);
+            //LoadSingleName(nameTuple.Item2);
+        }
 
-            LoadSingleName(nameTuple.Item1);
-            LoadSingleName(nameTuple.Item2);
+        private void LoadFriendPair(string user, string friend)
+        {
+            if (user[0] < 'A' || user[0] > 'Z')
+            {
+                throw new ArgumentOutOfRangeException(nameof(user));
+            }
+
+            if (friend[0] < 'A' || friend[0] > 'Z')
+            {
+                throw new ArgumentOutOfRangeException(nameof(friend));
+            }
+            try
+            {
+                Find(user).AddFriend(friend);
+            }
+            catch (KeyNotFoundException)
+            {
+                _index[FindArrayBasedOnFirstLetter(user)].Add(new User(user, friend));
+            }
+        }
+
+        private static bool IsAlreadyStored(User existingUser)
+        {
+            return existingUser != null;
         }
 
         private void LoadSingleName(string name)
