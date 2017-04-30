@@ -13,7 +13,7 @@ namespace Challenge
         private IUserCollection _graph;
         private bool _destNodeFound = false;
         private int _distance = 0;
-        private readonly IUserCollection _neighbourLayer;
+        private IUserCollection _neighbourLayer;
         private readonly IUserCollection _visitedNodes;
         private string _destinationNode;
 
@@ -36,7 +36,7 @@ namespace Challenge
                 LoadNewNeighbourLayer();
                 _destNodeFound = IsDestNodeInNeighbourLayer();
                 RemoveNeighbourNodesThatExistInVisitedNodes();
-            } while (_destNodeFound && _neighbourLayer.Count() != 0);
+            } while (!_destNodeFound && _neighbourLayer.Count() != 0);
 
             return _destNodeFound ? _distance : NOT_FOUND;
         }
@@ -76,8 +76,9 @@ namespace Challenge
             var newNeighbourLayer = new UserCollection();
             foreach (var neighbour in _neighbourLayer)
             {
-                newNeighbourLayer.AddRange(_neighbourLayer.GetFriendList(((User)neighbour).Name));
+                newNeighbourLayer.AddRange(_graph.GetFriendList(((User)neighbour).Name));
             }
+            _neighbourLayer = newNeighbourLayer;
         }
 
         private void VerifyInputAreValid(IUserCollection graph, string rootNode, string destinationNode)

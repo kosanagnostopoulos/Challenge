@@ -33,8 +33,6 @@ namespace Challenge
             }
             LoadFriendPair(nameTuple.Item1, nameTuple.Item2);
             LoadFriendPair(nameTuple.Item2, nameTuple.Item1);
-            //LoadSingleName(nameTuple.Item1);
-            //LoadSingleName(nameTuple.Item2);
         }
 
         private void LoadFriendPair(string user, string friend)
@@ -48,13 +46,14 @@ namespace Challenge
             {
                 throw new ArgumentOutOfRangeException(nameof(friend));
             }
-            try
-            {
-                Find(user).AddFriend(friend);
-            }
-            catch (KeyNotFoundException)
+            var existingUser = _index[FindArrayBasedOnFirstLetter(user)].Find(s => s.Name == user);
+            if (existingUser == null)
             {
                 _index[FindArrayBasedOnFirstLetter(user)].Add(new User(user, friend));
+            }
+            else
+            {
+                existingUser.AddFriend(friend);
             }
         }
 
