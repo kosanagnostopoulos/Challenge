@@ -30,6 +30,7 @@ namespace ChallengeTests
 
         private const int FINAL_NUMBER_OF_UNIQUE_ELEMENTS = 6;
         private List<string> friendList = new List<string>{"FRIEND1" , "FRIEND2" , "FRIEND3"};
+
         private UserCollection _loader;
 
         [TestInitialize]
@@ -206,6 +207,21 @@ namespace ChallengeTests
             }
 
             Assert.IsTrue(friendList.SequenceEqual(_loader.GetFriendList(NAME)));
+        }
+
+        [TestMethod]
+        public void ShouldBeAbleToWalkthroughAllTheElementsOfTheCollection()
+        {
+            foreach (var name in NAME_LIST)
+            {
+                _loader.Load(name);
+            }
+
+            var i = 0;
+            foreach (var element in _loader)
+            {
+                Console.WriteLine("one");
+            }
         }
     }
 }

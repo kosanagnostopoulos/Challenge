@@ -96,6 +96,7 @@ namespace Challenge
         {
             return _index[FindArrayBasedOnFirstLetter(name)].RemoveAll(s => s.Name == name) != 0;
         }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return (IEnumerator)GetEnumerator();

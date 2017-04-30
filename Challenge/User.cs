@@ -28,5 +28,18 @@ namespace Challenge
                 Friends.Add(name);
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            User obj1 = obj as User;
+            if (obj1 == null) return false;
+            return string.Equals(Name, obj1.Name);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Name != null ? Name.GetHashCode() : 0);
+        }
     }
 }

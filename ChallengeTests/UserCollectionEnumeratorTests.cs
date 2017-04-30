@@ -12,11 +12,13 @@ namespace ChallengeTests
     public class UserCollectionEnumeratorTests: UserCollectionEnumerator
     {
         private const int FIRST_ELEMENT = 0;
-        private const int SECOND_ARRAY = 1;
+        private const int THIRD_ARRAY = 2;
 
         public UserCollectionEnumeratorTests() : base(
             new List<User>[]
             {
+                new List<User>(),
+                new List<User>(), 
                 new List<User>{new User("ELEM1") , new User("ELEM2")} ,
                 new List<User>{new User("ELEM3")},
             }) { }
@@ -50,11 +52,9 @@ namespace ChallengeTests
             Reset();
 
             MoveNext();
-            MoveNext();
-            MoveNext();
 
             Assert.AreEqual(ELEMENT_FIRST_POSITION , _elementPointer);
-            Assert.AreEqual(SECOND_ARRAY , _arrayPointer);
+            Assert.AreEqual(THIRD_ARRAY, _arrayPointer);
         }
 
         [TestMethod]
@@ -81,11 +81,11 @@ namespace ChallengeTests
             Reset();
 
             MoveNext();
-            Assert.AreEqual(_index[0][0] , Current);
+            Assert.AreEqual(_index[2][0] , Current);
             MoveNext();
-            Assert.AreEqual(_index[0][1], Current);
+            Assert.AreEqual(_index[2][1], Current);
             MoveNext();
-            Assert.AreEqual(_index[1][0], Current);
+            Assert.AreEqual(_index[3][0], Current);
 
         }
 

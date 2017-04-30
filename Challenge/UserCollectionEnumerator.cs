@@ -35,8 +35,24 @@ namespace Challenge
 
         private void GoToStartOfNextArray()
         {
-            ++_arrayPointer;
+            do
+            {
+                ++_arrayPointer;
+            } while (CurrentArrayDoesNotHaveElements() && WithinTheBoundsOfIndex());
+
             _elementPointer = ELEMENT_FIRST_POSITION;
+        }
+
+        private bool CurrentArrayDoesNotHaveElements()
+        {
+            try
+            {
+                return _index[_arrayPointer].Count == 0;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
         }
 
         private bool WithinhTheBoundsOfCurrentArray()
