@@ -8,7 +8,7 @@ namespace Challenge
 {
     class Program
     {
-        private const string FILE_PATH = @"C:\myScripts\SocialNetwork.txt";
+        private const string FILE_PATH = @"..\..\SocialNetwork.txt";
 
         static void Main(string[] args)
         {
