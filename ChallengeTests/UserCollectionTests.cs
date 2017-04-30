@@ -36,7 +36,7 @@ namespace ChallengeTests
         [TestInitialize]
         public void Initialize()
         {
-            _loader = new UserCollection(new List<string>());
+            _loader = new UserCollection();
         }
 
         [TestMethod]

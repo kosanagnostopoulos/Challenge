@@ -15,19 +15,19 @@ namespace ChallengeTests
         const string ROOT_DOESNOT_EXIST = "ROOTDOESNOTEXIST";
         const string DESTINATION_DOESNOT_EXIST = "DESTINATION_DOESNOT_EXIST";
 
-        private List<string> VISITED_NODES = new List<string>
+        private List<User> VISITED_NODES = new List<User>
         {
-            "VISITED1",
-            "NEIGHBOUR1",
-            "VISITED2",
-            "NEIGHBOUR2",
-            "NEIGHBOUR5"
+            new User("VISITED1"),
+            new User("NEIGHBOUR1"),
+            new User("VISITED2"),
+            new User("NEIGHBOUR2"),
+            new User("NEIGHBOUR5")
         };
 
-        private List<string> NEIGHBOUR_NODES = new List<string>
+        private List<User> NEIGHBOUR_NODES = new List<User>
         {
-            "NEIGHBOUR1",
-            "NEIGHBOUR2"
+            new User("NEIGHBOUR1"),
+            new User("NEIGHBOUR2")
         };
 
         private List<string> FRIENDS_OF_NEIGHBOUR1 = new List<string>
@@ -62,35 +62,35 @@ namespace ChallengeTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void RootNodeAndDestinationNodeShouldBeDifferent()
         {
-            _algorithm.FindDistance(new UserCollection(new List<string>()), ROOT_NAME, ROOT_NAME);
+            _algorithm.FindDistance(new UserCollection(), ROOT_NAME, ROOT_NAME);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void RootNodeShouldNotBeNull()
         {
-            _algorithm.FindDistance(new UserCollection(new List<string>()), null, DESTINATION_NAME);
+            _algorithm.FindDistance(new UserCollection(), null, DESTINATION_NAME);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void RootNodeShouldNotNotBeWhiteSpace()
         {
-            _algorithm.FindDistance(new UserCollection(new List<string>()), "   ", DESTINATION_NAME);
+            _algorithm.FindDistance(new UserCollection(), "   ", DESTINATION_NAME);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void DestinationNodeShouldNotBeNull()
         {
-            _algorithm.FindDistance(new UserCollection(new List<string>()), ROOT_NAME, null);
+            _algorithm.FindDistance(new UserCollection(), ROOT_NAME, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void DestinationNodeShouldNotNotBeWhiteSpace()
         {
-            _algorithm.FindDistance(new UserCollection(new List<string>()), ROOT_NAME, "  ");
+            _algorithm.FindDistance(new UserCollection(), ROOT_NAME, "  ");
         }
 
         [TestMethod]
@@ -151,7 +151,7 @@ namespace ChallengeTests
 
             foreach (var visitedNode in VISITED_NODES)
             {
-            _neighbours.Verify(f => f.Remove(It.Is<string>(s => s == visitedNode)) , Times.Exactly(1));
+            _neighbours.Verify(f => f.Remove(It.Is<string>(s => s == visitedNode.Name)) , Times.Exactly(1));
             }
             _neighbours.Verify(f => f.Remove(It.IsAny<string>()), Times.Exactly(VISITED_NODES.Count));
         }
@@ -161,9 +161,9 @@ namespace ChallengeTests
         {
             SetupRootAndDestinationInMockCollection();
             _neighbours.Setup(f => f.GetEnumerator()).Returns(NEIGHBOUR_NODES.GetEnumerator());
-            _neighbours.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[0])))
+            _neighbours.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[0].Name)))
                 .Returns(FRIENDS_OF_NEIGHBOUR1);
-            _neighbours.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[1])))
+            _neighbours.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[1].Name)))
                 .Returns(FRIENDS_OF_NEIGHBOUR2);
 
             _algorithm.LoadNewNeighbourLayer();

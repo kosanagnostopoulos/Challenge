@@ -15,7 +15,7 @@ namespace Challenge
 
         private List<User>[] _index = new List<User>[LETTERS_OF_ALPHABET];
 
-        public UserCollection(ICollection<string> collection)
+        public UserCollection()
         {
             InitializeCollection();
         }

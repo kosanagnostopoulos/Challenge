@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Challenge
 {
-    public class ShortestPath
+    public class ShortestPath : IShortestPath
     {
         private const int NOT_FOUND = -1;
 
@@ -67,16 +67,16 @@ namespace Challenge
         {
             foreach (var visitedNode in _visitedNodes)
             {
-                _neighbourLayer.Remove((string)visitedNode);
+                _neighbourLayer.Remove(((User)visitedNode).Name);
             }
         }
 
         public void LoadNewNeighbourLayer()
         {
-            var newNeighbourLayer = new UserCollection(new List<string>());
+            var newNeighbourLayer = new UserCollection();
             foreach (var neighbour in _neighbourLayer)
             {
-                newNeighbourLayer.AddRange(_neighbourLayer.GetFriendList((string)neighbour));
+                newNeighbourLayer.AddRange(_neighbourLayer.GetFriendList(((User)neighbour).Name));
             }
         }
 

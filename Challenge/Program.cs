@@ -14,7 +14,7 @@ namespace Challenge
         {
             ILineReader reader = new LineReader();
             ILineParser parser = new LineParser();
-            IUserCollection user = new UserCollection(new List<string>());
+            IUserCollection user = new UserCollection();
 
             int lineCounter = 0;
             foreach (var line in reader.Read(FILE_PATH))

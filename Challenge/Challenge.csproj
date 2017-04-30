@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ILineParser.cs" />
     <Compile Include="ILineReader.cs" />
+    <Compile Include="IShortestPath.cs" />
     <Compile Include="IUserCollection.cs" />
     <Compile Include="LineParser.cs" />
     <Compile Include="LineReader.cs" />
