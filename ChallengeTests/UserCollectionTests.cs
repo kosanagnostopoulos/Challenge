@@ -220,7 +220,8 @@ namespace ChallengeTests
             var i = 0;
             foreach (var element in _loader)
             {
-                Console.WriteLine("one");
+                Assert.AreEqual(NAME_LIST[i] , ((User)element).Name);
+                ++i;
             }
         }
     }
