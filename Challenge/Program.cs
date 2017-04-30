@@ -15,6 +15,7 @@ namespace Challenge
             ILineReader reader = new LineReader();
             ILineParser parser = new LineParser();
             IUserCollection user = new UserCollection();
+            IShortestPath algorithm = new ShortestPath(new UserCollection(), new UserCollection());
 
             int lineCounter = 0;
             foreach (var line in reader.Read(FILE_PATH))
@@ -28,8 +29,14 @@ namespace Challenge
             }
             Console.WriteLine("End of reading from file.");
             Console.WriteLine($"Users in file {user.Count()}");
+            string startNode = "MYLES_JEFFCOAT";
+            string destinationNode = "ELOY_LANKARD";
+            Console.WriteLine($"Start {startNode} End {destinationNode}");
 
-        Console.ReadLine();
+            Console.WriteLine(algorithm.FindDistance(user, startNode, destinationNode));
+
+            Console.ReadLine();
+
         }
     }
 }
