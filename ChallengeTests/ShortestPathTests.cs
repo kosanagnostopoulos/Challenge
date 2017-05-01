@@ -147,7 +147,7 @@ namespace ChallengeTests
             SetupRootAndDestinationInMockCollection();
             _visited.Setup(f => f.GetEnumerator()).Returns(VISITED_NODES.GetEnumerator());
 
-            _algorithm.RemoveNeighbourNodesThatExistInVisitedNodes();
+            _algorithm.RemoveNeighbourNodesThatExistInVisitedLayer();
 
             foreach (var visitedNode in VISITED_NODES)
             {
@@ -161,12 +161,26 @@ namespace ChallengeTests
         {
             SetupRootAndDestinationInMockCollection();
             _neighbours.Setup(f => f.GetEnumerator()).Returns(NEIGHBOUR_NODES.GetEnumerator());
-            _neighbours.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[0].Name)))
+            _collection.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[0].Name)))
                 .Returns(FRIENDS_OF_NEIGHBOUR1);
-            _neighbours.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[1].Name)))
+            _collection.Setup(f => f.GetFriendList(It.Is<string>(s => s == NEIGHBOUR_NODES[1].Name)))
                 .Returns(FRIENDS_OF_NEIGHBOUR2);
+            _algorithm.Initialise(_collection.Object, ROOT_NAME, DESTINATION_NAME);
 
             _algorithm.LoadNewNeighbourLayer();
+        }
+
+        [TestMethod]
+        public void WillUpdateVisitedLayerWithTheNodesFromNeighbourLayer()
+        {
+            _neighbours.Setup(f => f.GetEnumerator()).Returns(NEIGHBOUR_NODES.GetEnumerator());
+
+            _algorithm.UpdateVisitedLayerWithNeighbourNodes();
+
+            foreach (var neighbour in NEIGHBOUR_NODES)
+            {
+            _visited.Verify(f => f.Load(It.Is<string>(s => s == neighbour.Name)));
+            }
         }
     }
 }

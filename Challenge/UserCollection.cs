@@ -97,7 +97,6 @@ namespace Challenge
             {
                 throw new ArgumentException(nameof(name));
             }
-            var a = _index[FindArrayBasedOnFirstLetter(name)].Find(s => s.Name == name);
             return _index[FindArrayBasedOnFirstLetter(name)].Find(s => s.Name == name) != null;
         }
 

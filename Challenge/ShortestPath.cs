@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,8 @@ namespace Challenge
                 ++_distance;
                 LoadNewNeighbourLayer();
                 _destNodeFound = IsDestNodeInNeighbourLayer();
-                RemoveNeighbourNodesThatExistInVisitedNodes();
+                RemoveNeighbourNodesThatExistInVisitedLayer();
+                UpdateVisitedLayerWithNeighbourNodes();
             } while (!_destNodeFound && _neighbourLayer.Count() != 0);
 
             return _destNodeFound ? _distance : NOT_FOUND;
@@ -63,11 +65,11 @@ namespace Challenge
             return _neighbourLayer.DoesExist(_destinationNode);
         }
 
-        public void RemoveNeighbourNodesThatExistInVisitedNodes()
+        public void UpdateVisitedLayerWithNeighbourNodes()
         {
-            foreach (var visitedNode in _visitedNodes)
+            foreach (var unique in _neighbourLayer)
             {
-                _neighbourLayer.Remove(((User)visitedNode).Name);
+                _visitedNodes.Load(((User)unique).Name);
             }
         }
 
@@ -79,6 +81,14 @@ namespace Challenge
                 newNeighbourLayer.AddRange(_graph.GetFriendList(((User)neighbour).Name));
             }
             _neighbourLayer = newNeighbourLayer;
+        }
+
+        public void RemoveNeighbourNodesThatExistInVisitedLayer()
+        {
+            foreach (var visitedNode in _visitedNodes)
+            {
+                _neighbourLayer.Remove(((User) visitedNode).Name);
+            }
         }
 
         private void VerifyInputAreValid(IUserCollection graph, string rootNode, string destinationNode)

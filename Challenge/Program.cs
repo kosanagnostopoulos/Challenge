@@ -17,26 +17,41 @@ namespace Challenge
             IUserCollection user = new UserCollection();
             IShortestPath algorithm = new ShortestPath(new UserCollection(), new UserCollection());
 
+            Console.CancelKeyPress += delegate {
+                Environment.Exit(0);
+            };
+            Console.WriteLine("Type any time CTRL-C to exit application.");
+            Console.WriteLine("Parsing file.");
             int lineCounter = 0;
             foreach (var line in reader.Read(FILE_PATH))
             {
                 user.Load(parser.Parse(line));
                 ++lineCounter;
-                if (lineCounter % 1000 == 0)
+                if (lineCounter % 100000 == 0)
                 {
                     Console.WriteLine($"Lines parsed {lineCounter}");
                 }
             }
             Console.WriteLine("End of reading from file.");
             Console.WriteLine($"Users in file {user.Count()}");
-            string startNode = "MYLES_JEFFCOAT";
-            string destinationNode = "ELOY_LANKARD";
-            Console.WriteLine($"Start {startNode} End {destinationNode}");
-
-            Console.WriteLine(algorithm.FindDistance(user, startNode, destinationNode));
-
-            Console.ReadLine();
-
+            Console.WriteLine("Calculate Distance between nodes.");
+            while (true)
+            {
+                Console.Write("Please type root node: ");
+                string startNode = Console.ReadLine();
+                Console.Write("Please type final node: ");
+                string destinationNode = Console.ReadLine();
+                Console.Write("Calculating distance : ");
+                var distance = algorithm.FindDistance(user, startNode, destinationNode);
+                if (distance == -1)
+                {
+                    Console.WriteLine("Cannot find connection between nodes.");
+                }
+                else
+                {
+                    Console.WriteLine(distance);
+                }
+            }
         }
     }
 }
