@@ -35,7 +35,7 @@ namespace Challenge
             LoadFriendPair(nameTuple.Item2, nameTuple.Item1);
         }
 
-        private void LoadFriendPair(string user, string friend)
+        public void LoadFriendPair(string user, string friend)
         {
             if (user[0] < 'A' || user[0] > 'Z')
             {
@@ -62,7 +62,7 @@ namespace Challenge
             return existingUser != null;
         }
 
-        private void LoadSingleName(string name)
+        public void LoadSingleName(string name)
         {
 
             if (name[0] < 'A' || name[0] > 'Z')

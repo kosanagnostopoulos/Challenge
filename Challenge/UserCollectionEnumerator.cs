@@ -30,6 +30,10 @@ namespace Challenge
             {
                 GoToStartOfNextArray();
             }
+/*            if ((WithinTheBoundsOfIndex()) && (WithinhTheBoundsOfCurrentArray()))
+            {
+                Console.WriteLine("Found element");
+            }*/
             return (WithinTheBoundsOfIndex()) && (WithinhTheBoundsOfCurrentArray());
         }
 
